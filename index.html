@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* 既存のスタイル */
+    </style>
+</head>
+<body>
+    <div id="app_fs_store">
+        <main>
+            <div id="fs_store">
+                <div>
+                    <header>粉もんスタンド おしん アンケート</header>
+                    <div class="content calendar-content">
+                        <div id="question_title" class="text-center">アンケートのご協力をお願いいたします</div>
+                        <p class="font_size_xs text-center">(所要時間1分)</p>
+                        <div id="msgError" style="display: none;">
+                            <div class="alert-warning">
+                                <ul class="m-0"><li>回答を選択してください。</li></ul>
+                            </div>
+                        </div>
+                        <dl class="questionForm">
+                            <dt>
+                                <strong>Q.ご来店ありがとうございました。本日は満足していただけましたでしょうか</strong>
+                            </dt>
+                            <dd>
+                                <ul>
+                                    <li>
+                                        <label><input name="radio-follow" type="radio" value="150581">&nbsp;非常に満足</label>
+                                    </li>
+                                    <li>
+                                        <label><input name="radio-follow" type="radio" value="150582">&nbsp;満足</label>
+                                    </li>
+                                    <li>
+                                        <label><input name="radio-follow" type="radio" value="150583">&nbsp;どちらでもない</label>
+                                    </li>
+                                    <li>
+                                        <label><input name="radio-follow" type="radio" value="150584">&nbsp;不満</label>
+                                    </li>
+                                    <li>
+                                        <label><input name="radio-follow" type="radio" value="150585">&nbsp;非常に不満</label>
+                                    </li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="text-center">
+                        <button type="button" class="btn-next" id="submitQuestion1">次 へ</button>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script type="text/javascript">
+        $(document).on('click', '#submitQuestion1', function() {
+            var inputValue = $('input[name=radio-follow]:checked').val();
+            var branch_id = "";
+            if (inputValue == undefined) {
+                $('#msgError').show();
+            } else {
+                $('#msgError').hide();
+
+                $.ajax({
+                    url: '/submit_question',
+                    type: 'POST',
+                    dataType: 'script',
+                    data: {
+                        questionnaire_detail_select_id: inputValue,
+                        questionnaire_detail_id: 31124,
+                        questionnaire_id: 27068,
+                        count_question: 0,
+                        qa_id: null,
+                        branch_id: branch_id,
+                        input_type: "0"
+                    },
+                    success: function() {
+                        if (inputValue === '150581' || inputValue === '150582') {
+                            window.location.href = 'https://g.page/r/CaouaaehSFuXEAI/review';
+                        }
+                    }
+                });
+            }
+        });
+    </script>
+</body>
+</html>
